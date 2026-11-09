@@ -70,6 +70,11 @@ web_modules/
 .env.*
 !.env.example
 
+# Render / deployment secrets
+render-secrets*.json
+render-secrets*.txt
+*.pem
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
@@ -147,3 +152,6 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Local data persisted by the app
+/data/
