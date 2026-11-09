@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ALLIANCES</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar left">
+        <div class="panel auth-panel">
+          <h2>ALLIANCES</h2>
+          <div id="authSection">
+            <h3>Login</h3>
+            <form id="loginForm">
+              <input type="text" id="loginUsername" placeholder="Username" required />
+              <input type="password" id="loginPassword" placeholder="Password" required />
+              <button type="submit">Login</button>
+            </form>
+            <hr />
+            <h3>Register</h3>
+            <form id="registerForm">
+              <input type="text" id="registerUsername" placeholder="Username" required />
+              <input type="text" id="registerDisplayName" placeholder="Display name" required />
+              <input type="text" id="registerCountry" placeholder="Country code" value="US" maxlength="3" />
+              <input type="password" id="registerPassword" placeholder="Password" required />
+              <button type="submit">Create account</button>
+            </form>
+          </div>
+          <div id="logoutWrap" class="hidden">
+            <button id="logoutBtn">Logout</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Game Status</h3>
+          <div id="statusBox">Not connected</div>
+        </div>
+
+        <div class="panel">
+          <h3>Player List</h3>
+          <ul id="playerList"></ul>
+        </div>
+
+        <div class="panel hidden" id="playerActions">
+          <h3>Actions</h3>
+          <button type="button" class="secondary-button" id="moveModeBtn">Move</button>
+          <button type="button" class="secondary-button" id="attackModeBtn">Attack</button>
+          <button type="button" class="secondary-button" id="rangeModeBtn">Range Increase</button>
+          <button type="button" class="secondary-button" id="giveApModeBtn">Give AP</button>
+          <div class="action-controls hidden" id="moveControls">
+            <div id="moveSelectionLabel">Choose a highlighted tile.</div>
+            <button type="button" id="confirmMoveBtn">✓ Confirm move</button>
+            <button type="button" class="secondary-button" id="cancelMoveBtn">Cancel</button>
+          </div>
+          <div class="action-controls hidden" id="attackControls">
+            <div id="attackSelectionLabel">Choose a highlighted player or NPC.</div>
+            <button type="button" id="confirmAttackBtn">✓ Confirm attack (cost: 2 AP)</button>
+            <button type="button" class="secondary-button" id="cancelAttackBtn">Cancel</button>
+          </div>
+          <div class="action-controls hidden" id="rangeControls">
+            <div id="rangePreviewLabel"></div>
+            <button type="button" id="confirmRangeBtn">✓ Confirm range increase</button>
+            <button type="button" class="secondary-button" id="cancelRangeBtn">Cancel</button>
+          </div>
+          <div class="action-controls hidden" id="giveApControls">
+            <label for="apRecipient">Give 1 AP (cost: 1 AP)</label>
+            <select id="apRecipient"></select>
+            <button type="button" id="confirmGiveApBtn">✓ Confirm AP gift</button>
+            <button type="button" class="secondary-button" id="cancelGiveApBtn">Cancel</button>
+          </div>
+        </div>
+      </aside>
+
+      <main class="board-panel">
+        <div class="topbar">
+          <div>
+            <strong id="modeLabel">TEST</strong>
+          </div>
+          <div id="playerBadge">Not logged in</div>
+        </div>
+        <div id="board" class="board" aria-label="Game board"></div>
+      </main>
+
+      <aside class="sidebar right">
+        <div class="panel">
+          <h3>Account Settings</h3>
+          <form id="profileForm">
+            <input type="text" id="profileDisplayName" placeholder="Display name" />
+            <input type="text" id="profileCountry" placeholder="Country code" maxlength="3" />
+            <button type="submit">Save profile</button>
+          </form>
+          <form id="passwordForm">
+            <input type="password" id="currentPassword" placeholder="Current password" />
+            <input type="password" id="newPassword" placeholder="New password" />
+            <input type="password" id="confirmPassword" placeholder="Confirm password" />
+            <button type="submit">Change password</button>
+          </form>
+        </div>
+
+        <div class="panel">
+          <h3>Private State</h3>
+          <div id="privateState"></div>
+        </div>
+
+        <div class="panel admin-panel hidden" id="adminPanel">
+          <h3>Admin Panel</h3>
+          <div class="admin-game-controls">
+            <button type="button" class="secondary-button" id="startGameBtn">Start Game</button>
+            <button type="button" class="secondary-button" id="pauseGameBtn">Pause game</button>
+            <button type="button" class="secondary-button" id="resetGameBtn">Reset game (remove NPCs)</button>
+            <button type="button" class="secondary-button" id="restartServerBtn">Restart server</button>
+          </div>
+          <form id="adminForm">
+            <label>Next turn at<br><input type="datetime-local" id="adminNextTurnAt" /></label>
+            <label>Turn interval (ms)<br><input type="number" id="adminTurnInterval" min="5000" step="1000" /></label>
+            <label>Action window (ms)<br><input type="number" id="adminActionWindow" min="1000" step="1000" /></label>
+            <label>AP per turn<br><input type="number" id="adminApPerTurn" min="1" step="1" /></label>
+            <label><input type="checkbox" id="adminReveal" /> Reveal attacker to victim</label>
+            <button type="submit">Save settings</button>
+          </form>
+          <hr />
+          <h3>NPCs</h3>
+          <label>NPC name<br><input type="text" id="npcName" maxlength="40" placeholder="NPC name" /></label>
+          <button type="button" class="secondary-button" id="placeNpcBtn">Choose NPC location</button>
+          <div class="action-controls hidden" id="npcPlacementControls">
+            <div id="npcLocationLabel">Click an empty tile to choose a location.</div>
+            <button type="button" id="confirmNpcBtn">✓ Create NPC</button>
+            <button type="button" class="secondary-button" id="cancelNpcBtn">Cancel</button>
+          </div>
+          <label>Move NPC<br><select id="npcSelector"></select></label>
+          <button type="button" class="secondary-button" id="moveNpcBtn">Choose NPC destination</button>
+          <div class="action-controls hidden" id="npcMoveControls">
+            <div id="npcMoveLocationLabel">Click an adjacent empty tile.</div>
+            <button type="button" id="confirmNpcMoveBtn">✓ Confirm NPC move</button>
+            <button type="button" class="secondary-button" id="cancelNpcMoveBtn">Cancel</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>

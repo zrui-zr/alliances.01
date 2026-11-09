@@ -1,0 +1,29 @@
+{
+  "name": "alliances",
+  "version": "1.0.0",
+  "description": "ALLIANCES browser strategy game",
+  "main": "server.js",
+  "scripts": {
+    "start:test": "node server.js --mode=test",
+    "start:live": "node server.js --mode=live",
+    "dev:test": "node server.js --mode=test",
+    "dev:live": "node server.js --mode=live"
+  },
+  "keywords": [
+    "game",
+    "strategy",
+    "socket.io",
+    "browser-game"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.4.1",
+    "helmet": "^8.0.0",
+    "socket.io": "^4.8.1"
+  }
+}

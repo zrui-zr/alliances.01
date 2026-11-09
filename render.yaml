@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: alliances-test
+    runtime: node
+    plan: 0.5c-512mb
+    buildCommand: npm ci
+    startCommand: npm run start:test
+    healthCheckPath: /health
+    autoDeploy: false
+    disk:
+      name: alliances-test-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: DATA_DIR
+        value: /var/data
+      - key: ADMIN_PASSWORD
+        sync: false
+
+  - type: web
+    name: alliances-live
+    runtime: node
+    plan: 0.5c-512mb
+    buildCommand: npm ci
+    startCommand: npm run start:live
+    healthCheckPath: /health
+    autoDeploy: false
+    disk:
+      name: alliances-live-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: DATA_DIR
+        value: /var/data
+      - key: ADMIN_PASSWORD
+        sync: false
